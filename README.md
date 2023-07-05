@@ -13,7 +13,7 @@ This plugin sends WooCommerce orders to Eitaa group/channel.
 
 Visit the [Eitaayar.ir](https://eitaayar.ir/) website and read its documentation.
 
-### Getting started
+## Getting started
 
 **What should I do after receiving the `API KEY` ?**
 
@@ -21,7 +21,7 @@ With the following URL format, You can communicate with the API and send or rece
 
 `https://eitaayar.ir/api/API_KEY/METHOD_NAME`
 
-### Setup
+## Setup
 
 Setup for the new API integration :
 
@@ -37,7 +37,7 @@ In the plugin directory, go to `/class` folder and edit the `EitaaAPI.php` file.
     ...
 ```
 
-### Installation
+## Installation
 
 **How to install this plugin ?**
 
@@ -49,6 +49,6 @@ You should go to the plugins directory and put the plugin file there.
 
 `YOUR_SITE/wp-content/plugins/`
 
-### Release History
+## Release History
 
 - 2023-07-05 - 1.0.0 - Stable release
