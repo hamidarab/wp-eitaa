@@ -1,4 +1,4 @@
-## Notification of WooCommerce orders in Eitaa Application
+## Notification of WooCommerce orders in Eitaa application
 
 **What is the Eitaa ?**
 
