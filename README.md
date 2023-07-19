@@ -3,7 +3,7 @@
 **What is the Eitaa ?**
 
 Eitaa is a messenger and it is designed to meet all the needs of Iranian users.
-In Eitaa, you can easily chat with your friends, share your files, create groups and channels, and use advanced features of Ita to manage and personalize your software.
+In Eitaa, you can easily chat with your friends, share your files, create groups and channels, and use advanced features of Eitaa to manage and personalize your software.
 
 **What is this plugin developed for?**
 
