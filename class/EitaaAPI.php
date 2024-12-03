@@ -20,11 +20,13 @@ class EitaaAPI
         $phone =  $order->get_billing_phone();
         $date_created = $order->get_date_created();
         $date_paid = $order->get_date_paid();
+        $date_created_jalali = $date_created ? Morilog\Jalali\Jalalian::fromDateTime($date_created)->format('j F Y ساعت H:i') : 'تاریخ نامشخص';
+        $date_paid_jalali = $date_paid ? Morilog\Jalali\Jalalian::fromDateTime($date_paid)->format('j F Y ساعت H:i') : 'تاریخ نامشخص';
         $fullPrice = $order->get_total();
         $order_items = $order->get_items();
         $text = '♦️ سفارش جدید به شماره : ' . $order_id . PHP_EOL . PHP_EOL;
-        $text .= '⏰ تاریخ ایجاد سفارش : ' . $date_created . PHP_EOL;
-        $text .= '💳 زمان پرداخت سفارش : ' . $date_paid . PHP_EOL;
+        $text .= '⏰ تاریخ ایجاد سفارش : ' . $date_created_jalali . PHP_EOL;
+        $text .= '💳 زمان پرداخت سفارش : ' . $date_paid_jalali . PHP_EOL;
         $text .= '👤 نام و نام خانوادگی : ' . $firstName . ' ' . $lastName . PHP_EOL;
         $text .= '📍 آدرس : ' . $address . PHP_EOL;
         $text .= '📬 کد پستی : ' . $postcode . PHP_EOL;
