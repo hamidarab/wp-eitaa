@@ -51,6 +51,8 @@ You should go to the plugins directory and put the plugin file there.
 
 ## Release History
 
+- 2025-21-10 - 2.0.0 - Add panel option and show connection status in admin toolbar
+
 - 2024-12-03 - 1.0.0 - Fix order date and converting it to the correct shamsi date
 
 - 2023-07-05 - 1.0.0 - Stable release
