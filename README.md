@@ -1,56 +1,153 @@
-## Notification of WooCommerce orders in Eitaa application
+# پلاگین اشتراک سفارشات ووکامرس در ایتا و بله
 
-**What is the Eitaa ?**
+افزونه وردپرس برای ارسال اطلاعات سفارش‌های ووکامرس به پیام‌رسان‌های ایتا و بله.
 
-Eitaa is a messenger and it is designed to meet all the needs of Iranian users.
-In Eitaa, you can easily chat with your friends, share your files, create groups and channels, and use advanced features of Eitaa to manage and personalize your software.
+نسخه فعلی افزونه: `2.1.0`
 
-**What is this plugin developed for?**
+## قابلیت‌ها
 
-This plugin sends WooCommerce orders to Eitaa group/channel.
+- ارسال خودکار سفارش‌های ووکامرس بعد از تغییر وضعیت سفارش به `processing`.
+- ارسال سفارش به ایتا از طریق سرویس `Eitaayar`.
+- ارسال سفارش به بله از طریق `Bale Bot API`.
+- امکان فعال یا غیرفعال کردن جداگانه ایتا و بله.
+- تنظیم جداگانه `Base URL`، توکن و `Chat ID` برای هر پیام‌رسان.
+- نمایش وضعیت اتصال هر پیام‌رسان با متد `getMe` در صفحه تنظیمات افزونه.
+- نمایش وضعیت پیام‌رسان‌ها در نوار ابزار مدیریت وردپرس.
+- دکمه ارسال دستی سفارش در صفحه مدیریت سفارش ووکامرس.
+- جلوگیری از ارسال تکراری در ارسال خودکار.
+- ویرایش پیام قبلی بله با متد `editMessageText` در ارسال دستی، در صورتی که `message_id` پیام قبلی ذخیره شده باشد.
+- نمایش نتیجه ارسال دستی داخل پنجره مودال مدیریت سفارش.
 
-**How to use Eitaa api?**
+## اطلاعات داخل پیام سفارش
 
-Visit the [Eitaayar.ir](https://eitaayar.ir/) website and read its documentation.
+متن پیام سفارش شامل این موارد است:
 
-## Getting started
+- شماره سفارش
+- تاریخ ایجاد سفارش
+- زمان پرداخت سفارش
+- نام و نام خانوادگی خریدار
+- آدرس، کد پستی و تلفن
+- آیتم‌های سفارش، تعداد و قیمت هر آیتم
+- روش ارسال با آیکون مشخص
+- یادداشت خریدار با آیکون `📝`
+- مبلغ کل سفارش
 
-**What should I do after receiving the `API KEY` ?**
+## نصب
 
-With the following URL format, You can communicate with the API and send or receive the required data.
+1. پوشه افزونه را داخل مسیر `wp-content/plugins` قرار دهید.
+2. افزونه را از بخش افزونه‌های وردپرس فعال کنید.
+3. از منوی مدیریت وردپرس وارد بخش `ایتــا/بله` شوید.
+4. اطلاعات اتصال پیام‌رسان‌های مورد نظر را وارد کنید.
+5. وضعیت اتصال را در همان صفحه بررسی کنید.
 
-`https://eitaayar.ir/api/API_KEY/METHOD_NAME`
+## تنظیمات ایتا
 
-## Setup
+ارسال به ایتا از طریق `Eitaayar` انجام می‌شود.
 
-Setup for the new API integration :
+تنظیمات ایتا:
 
-In the plugin directory, go to `/class` folder and edit the `EitaaAPI.php` file.
+- فعال یا غیرفعال بودن ارسال به ایتا
+- `Base URL`
+- توکن
+- `Chat ID`
 
+مقدار پیش‌فرض `Base URL`:
+
+```text
+https://eitaayar.ir
 ```
-    class EitaaAPI {
 
-        protected static $ApiToken = 'YOUR_API_KEY';
-        protected static $baseUrl = 'https://eitaayar.ir';
-        protected static $chatID = 'YOUR_CHAT_ID_EITAA';
+الگوی درخواست:
 
-    ...
+```text
+/api/TOKEN/METHOD
 ```
 
-## Installation
+## تنظیمات بله
 
-**How to install this plugin ?**
+ارسال به بله از طریق `Bale Bot API` انجام می‌شود.
 
-You should go to WooCommerce plugins installation section and install the plugin file there.
+تنظیمات بله:
 
-_OR_
+- فعال یا غیرفعال بودن ارسال به بله
+- `Base URL`
+- توکن ربات بله
+- `Chat ID` بله
 
-You should go to the plugins directory and put the plugin file there.
+مقدار پیش‌فرض `Base URL`:
 
-`YOUR_SITE/wp-content/plugins/`
+```text
+https://tapi.bale.ai
+```
 
-## Release History
+الگوی درخواست:
 
-- 2024-12-03 - 1.0.0 - Fix order date and converting it to the correct shamsi date
+```text
+/bot<TOKEN>/METHOD
+```
 
-- 2023-07-05 - 1.0.0 - Stable release
+## ارسال خودکار سفارش
+
+افزونه به اکشن زیر ووکامرس متصل است:
+
+```php
+woocommerce_order_status_processing
+```
+
+وقتی وضعیت سفارش به `processing` تغییر کند، سفارش برای پیام‌رسان‌های فعال ارسال می‌شود.
+
+برای جلوگیری از ارسال تکراری، وضعیت ارسال هر پیام‌رسان در متای سفارش ذخیره می‌شود:
+
+```text
+_eitaa_sent_eitaayar
+_eitaa_sent_bale
+```
+
+## ارسال دستی سفارش
+
+در صفحه مدیریت سفارش ووکامرس، دکمه `ارسال به پیام‌رسان‌ها` اضافه می‌شود.
+
+ارسال دستی برای تست، ارسال مجدد یا ویرایش پیام بله استفاده می‌شود.
+
+## ویرایش پیام در بله
+
+برای بله، اگر پیام قبلی سفارش قبلا ارسال شده و شناسه پیام آن ذخیره شده باشد، ارسال دستی به جای ساخت پیام جدید، متد زیر را صدا می‌زند:
+
+```text
+editMessageText
+```
+
+شناسه پیام بله در متای سفارش ذخیره می‌شود:
+
+```text
+_eitaa_message_id_bale
+```
+
+نکته مهم: پیام‌هایی که قبل از اضافه شدن قابلیت ویرایش ارسال شده‌اند، معمولا `message_id` ذخیره‌شده ندارند. در این حالت افزونه نمی‌تواند پیام قبلی بله را ویرایش کند، چون API بله برای ویرایش حتما به `chat_id` و `message_id` نیاز دارد.
+
+## ویرایش پیام در ایتا
+
+در نسخه فعلی، ویرایش پیام برای ایتا پیاده‌سازی نشده است. مسیر ایتا در این افزونه از `Eitaayar` استفاده می‌کند و در حال حاضر فقط ارسال پیام با `sendMessage` برای آن استفاده می‌شود.
+
+اگر سرویس Eitaayar متد ویرایش پیام و شناسه پیام قابل استفاده ارائه کند، می‌توان منطق ویرایش را مشابه بله به افزونه اضافه کرد.
+
+## نکات توسعه
+
+فایل‌های اصلی افزونه:
+
+```text
+Core.php
+class/EitaaAPI.php
+```
+
+کلاس `EitaaAPI` مسئول ساخت متن سفارش، ارسال درخواست‌ها، بررسی وضعیت اتصال و مدیریت ارسال یا ویرایش پیام است.
+
+فایل `Core.php` مسئول ثبت تنظیمات، صفحه تنظیمات مدیریت، دکمه ارسال دستی و اتصال افزونه به اکشن‌های وردپرس و ووکامرس است.
+
+## نیازمندی‌ها
+
+- وردپرس
+- ووکامرس
+- دسترسی خروجی سرور به API پیام‌رسان‌ها
+- توکن و `Chat ID` معتبر برای پیام‌رسان‌های فعال
+
