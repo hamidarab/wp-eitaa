@@ -9,6 +9,7 @@ Licence: GPLv2 or Later
 Author URI: https://hamidarab.ir
 */
 
+
 defined('ABSPATH') || exit;
 
 define('EITA_PLUGIN_DIR', plugin_dir_path(__FILE__));
